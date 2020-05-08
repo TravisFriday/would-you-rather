@@ -1,26 +1,46 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component /*Fragment*/ } from "react";
+import Home from "./pages/Home";
+import { connect } from "react-redux";
+import { LoadingBar } from "react-redux-loading";
+// import { BrowserRouter, Router, Route, Switch } from "react-router-dom";
+import NavigationBar from "./components/NavigationBar";
+//import { handleReceiveLoginUser } from "./actions/authedUser";
+import { handleInitialData } from "./actions/shared";
+//import { handleReceiveQuestions, receiveQuestions } from "./actions/questions";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  componentDidMount() {
+    //gets questions, users, and authed user
+    this.props.dispatch(handleInitialData());
+  }
+  render() {
+    return (
+      <div>
+        <NavigationBar />
+        <LoadingBar />
+        <Home />
+      </div>
+      // <Router>
+      //   <Fragment>
+      //     <LoadingBar />
+      //     <div className="container">
+      //       <NavigationBar />
+      //       {this.props.loading === true ? null : (
+      //         <div>
+      //           <Route path="/" exact component={Home} />
+      //           {/* <Route />
+      //           <Route /> */}
+      //         </div>
+      //       )}
+      //     </div>
+      //   </Fragment>
+      // </Router>
+    );
+  }
 }
 
-export default App;
+function mapStateToProps({ login }) {
+  return {};
+}
+
+export default connect(mapStateToProps)(App);
