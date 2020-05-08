@@ -8,7 +8,6 @@ class Questions extends Component {
   render() {
     const { question } = this.props;
 
-    console.log("here is the question", question);
     if (question === null) {
       return <p>This question does not exist</p>;
     }
@@ -34,9 +33,8 @@ class Questions extends Component {
 }
 
 function mapStateToProps({ authedUser, users, questions }, { id }) {
-  console.log("check this id out", users);
-  const question = questions[id];
-  //console.log("The Logged in user is:", login.loggedInUser.id);
+  const question = questions[authedUser];
+  console.log("the question is :", question);
   return {
     users,
     question: question

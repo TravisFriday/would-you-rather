@@ -1,60 +1,62 @@
-import { saveQuestion, saveQuestionAnswer, getInitialData } from "../utils/api";
+import { getInitialData } from "../utils/api";
 import { showLoading, hideLoading } from "react-redux-loading";
 import {
-  addUserQuestion,
-  addUserQuestionAnswer,
-  handleReceiveUsers,
+  // addUserQuestion,
+  // addUserQuestionAnswer,
+  // handleReceiveUsers,
   receiveUsers,
 } from "./users";
 import {
-  addQuestion,
-  addQuestionAnswer,
-  handleReceiveQuestions,
+  // addQuestion,
+  // addQuestionAnswer,
+  // handleReceiveQuestions,
   receiveQuestions,
 } from "./questions";
-import { setAuthedUser, handleReceiveLoginUser } from "./authedUser";
+import { LoginUser } from "./authedUser";
+//import { setAuthedUser, handleReceiveLoginUser } from "./authedUser";
 
 const AUTHED_ID = "tylermcginnis";
-
-export function handleAddQuestionAnswer(qid, answer) {
-  return (dispatch, getState) => {
-    dispatch(showLoading());
-    const { login } = getState();
-    const authedUser = login.loggedInUser.id;
-    //const questionAnswer = { authedUser, qid, answer };
-    saveQuestionAnswer({ authedUser, qid, answer }).then(() => {
-      dispatch(addUserQuestionAnswer({ authedUser, qid, answer }));
-      dispatch(addQuestionAnswer({ authedUser, qid, answer }));
-      dispatch(hideLoading());
-    });
-  };
-}
-//cb will be used to clear the fields
-export function handleAddQuestion(question, cb) {
-  return (dispatch, getState) => {
-    dispatch(showLoading());
-
-    const { login } = getState();
-    const authedUser = login.loggedInUser.id;
-
-    saveQuestion({ question, authedUser })
-      .then((q) => {
-        dispatch(addUserQuestion(q));
-        dispatch(addQuestion(q));
-        dispatch(showLoading());
-      })
-      .then(cb);
-  };
-}
 
 export function handleInitialData() {
   return (dispatch) => {
     dispatch(showLoading());
     return getInitialData().then(({ users, questions }) => {
-      dispatch(handleReceiveUsers(users));
-      dispatch(handleReceiveQuestions(questions));
-      dispatch(handleReceiveLoginUser(AUTHED_ID));
+      dispatch(receiveUsers(users));
+      dispatch(receiveQuestions(questions));
+      dispatch(LoginUser(AUTHED_ID));
       dispatch(hideLoading());
     });
   };
 }
+
+// export function handleAddQuestionAnswer(qid, option) {
+//   return (dispatch, getState) => {
+//     dispatch(showLoading());
+//     const { authedUser } = getState();
+
+//     //const questionAnswer = { authedUser, qid, option };
+//     saveQuestionAnswer({ authedUser, qid, option }).then(() => {
+//       dispatch(addQuestionAnswer({ authedUser, qid, option }));
+//       dispatch(addUserQuestionAnswer({ authedUser, qid, option }));
+//       dispatch(hideLoading());
+//     });
+//   };
+// }
+// //Add a cb function as argument
+// export function handleAddQuestion(optionOneText, optionTwoText) {
+//   return (dispatch, getState) => {
+//     dispatch(showLoading());
+
+//     const { authedUser } = getState();
+//     return saveQuestion({
+//       optionOneText,
+//       optionTwoText,
+//       author: authedUser,
+//     }).then((q) => {
+//       dispatch(addQuestion(q));
+//       dispatch(addUserQuestion(authedUser, q.id));
+//       dispatch(showLoading());
+//     });
+//     //.then(cb);
+//   };
+// }

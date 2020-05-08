@@ -18,18 +18,17 @@ export default function users(state = {}, action) {
           ...state[action.authedUser],
           answers: {
             ...state[action.authedUser].answers,
-            [action.questionID]: action.answer,
+            [action.questionID]: action.option,
           },
         },
       };
     case ADD_USER_QUESTION:
+      const { authedUser, qid } = action;
       return {
         ...state,
-        [action.question.author]: {
-          ...state[action.question.author],
-          questions: state[action.question.author].questions.concat(
-            action.question
-          ),
+        [authedUser]: {
+          ...state[authedUser],
+          questions: state[authedUser].questions.concat(qid),
         },
       };
     default:

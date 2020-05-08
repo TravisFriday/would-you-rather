@@ -1,5 +1,5 @@
 //import { showLoading, hideLoading } from "react-redux-loading";
-import { getUser } from "../utils/api";
+// import { getUser } from "../utils/api";
 //might remove
 
 export const LOGIN = "LOGIN";
