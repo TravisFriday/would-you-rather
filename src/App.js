@@ -16,7 +16,7 @@ class App extends Component {
   };
   componentDidMount() {
     //gets questions, users, and authed user
-    this.props.handleInitialData();
+    this.props.dispatch(handleInitialData());
     console.log("it is completed");
   }
 
@@ -61,13 +61,4 @@ function mapStateToProps({ authedUser }) {
     notLoggedIn: authedUser === null,
   };
 }
-
-function mapDispatchToProps(dispatch) {
-  return {
-    handleInitialData: () => {
-      dispatch(handleInitialData());
-    },
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps)(App);
