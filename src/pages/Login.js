@@ -1,85 +1,92 @@
 import React, { PureComponent } from "react";
 //import { Form, FormGroup, Label, Input, Row, Col } from "reactstrap";
 import { connect } from "react-redux";
-import PropTypes from "prop-types";
+//import PropTypes from "prop-types";
 import { LoginUser } from "../actions/authedUser";
 import { Form, Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
+import { handleInitialData } from "../actions/shared";
 
 class Login extends PureComponent {
-  //   constructor(props) {
-  //     super(props);
-  //     this.state = { userId: "" };
-  //     this.handleChangeUser = this.handleChangeUser.bind(this);
-  //     this.handleSubmit = this.handleSubmit.bind(this);
-  //   }
+  state = {
+    dataLoaded: true,
+    userSelected: "",
+  };
+  componentDidMount() {
+    //gets questions, users, and authed user
+    this.props.dispatch(handleInitialData()).then(() => {
+      this.setState({
+        dataLoaded: false,
+      });
+    });
+  }
+  handleChange(e) {
+    const userSelected = e.target.value;
+    this.setState({ userSelected });
+  }
 
-  //   handleChangeUser(event) {
-  //     this.setState({ userId: event.target.value });
-  //   }
+  handleSubmit = (e) => {
+    e.preventDefault();
+    const { dispatch } = this.props;
+    const { userSelected } = this.state;
 
-  handleSubmit(event) {
-    const { userId } = this.state;
-    const { authenticate } = this.props;
-    if (userId) {
-      authenticate(userId);
+    if (userSelected) {
+      dispatch(LoginUser(userSelected));
     } else {
       alert("Please select a user before.");
     }
-    event.preventDefault();
-  }
+  };
 
   render() {
-    const { users } = this.props;
-    console.log(users);
-    // const { userId } = this.state;
+    const { users, authedUser } = this.props;
+    const { dataLoaded } = this.state;
+    if (dataLoaded) {
+      return <h3>Loading data...</h3>;
+    }
+
+    if (authedUser) {
+      return <Redirect to="/" />;
+    }
+
     return (
       <div className="container" style={{ width: "50%", paddingTop: 20 }}>
-        <Form>
-          <Form.Group controlId="exampleForm.ControlSelect1">
-            <Form.Label>Select User</Form.Label>
-            <Form.Control as="select">
-              {users === null
-                ? users.map((user) => <option>{user.name}</option>)
-                : null}
-              {/* <option>Tyler</option>
-              <option>Sarah</option>
-              <option>John</option> */}
-            </Form.Control>
-          </Form.Group>
-
-          <Link to="/">
-            <Button
-              variant="primary"
-              type="submit"
-              onSubmit={this.handleSubmit}
+        <span>Select User to log in as</span>
+        <form id="Login" onSubmit={this.handleSubmit}>
+          <div className="form-group">
+            <select
+              className="form-control"
+              id="userId"
+              onChange={(e) => this.handleChange(e)}
             >
-              Submit
-            </Button>
-          </Link>
-        </Form>
+              <option></option>
+              {Object.keys(users).map((user) => {
+                return (
+                  <option key={users[user].id} value={users[user].id}>
+                    {users[user].name}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
+
+          <button
+            type="submit"
+            className="btn btn-primary"
+            disabled={this.state.userSelected === ""}
+          >
+            Login
+          </button>
+        </form>
       </div>
     );
   }
 }
 
-Login.propTypes = {
-  users: PropTypes.object.isRequired,
-  authenticate: PropTypes.func.isRequired,
-};
-
-function mapStateToProps({ users }) {
+function mapStateToProps({ users, authedUser }) {
   return {
     users,
+    authedUser,
   };
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    authenticate: (id) => {
-      dispatch(LoginUser(id));
-    },
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(mapStateToProps)(Login);

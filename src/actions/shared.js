@@ -12,10 +12,8 @@ import {
   // handleReceiveQuestions,
   receiveQuestions,
 } from "./questions";
-import { LoginUser } from "./authedUser";
+//import { LoginUser } from "./authedUser";
 //import { setAuthedUser, handleReceiveLoginUser } from "./authedUser";
-
-const AUTHED_ID = "tylermcginnis";
 
 export function handleInitialData() {
   return (dispatch) => {
@@ -23,7 +21,6 @@ export function handleInitialData() {
     return getInitialData().then(({ users, questions }) => {
       dispatch(receiveUsers(users));
       dispatch(receiveQuestions(questions));
-      dispatch(LoginUser(AUTHED_ID));
       dispatch(hideLoading());
     });
   };

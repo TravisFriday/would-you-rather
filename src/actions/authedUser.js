@@ -26,17 +26,4 @@ export function LogoutUser() {
 //     });
 //   };
 // }
-// //might remove
-// export function receiveLogoutUser() {
-//   return {
-//     type: LOGOUT,
-//     loggedInAs: null,
-//     authorized: null,
-//   };
-// }
-// //might remove
-// export function handleReceiveLogoutUser(id) {
-//   return (dispatch) => {
-//     dispatch(receiveLogoutUser());
-//   };
-// }
+//might remove
