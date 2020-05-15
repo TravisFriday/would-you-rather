@@ -2,7 +2,9 @@
 
 This is React/Redux adaptation of the popular game Would you rather! You can answer questions and see what other users on the. You can view leaderboard to see how active other users are on the platform by showing how many questions they have asked and answered.
 
-# To get this project started run the following commands in the terminal:
+# Getting Started
+
+To get this project started run the following commands in the terminal:
 
 `npm install` to install the project dependencies
 `npm start` to start the project
