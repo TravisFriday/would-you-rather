@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Container, Card, Form, FormGroup, Row } from "react-bootstrap";
-import { Button } from "reactstrap";
+import { Container, Card, Form, FormGroup, Row, Button } from "react-bootstrap";
+//import { Button } from "reactstrap";
 import { handleAddQuestion } from "../actions/shared";
 import { Redirect } from "react-router-dom";
 
@@ -65,7 +65,11 @@ class NewQuestion extends Component {
                     placeholder="Option Two"
                   />
                 </FormGroup>
-                <Button disabled={optionOne === "" || optionTwo === ""}>
+                <Button
+                  disabled={optionOne === "" || optionTwo === ""}
+                  type="submit"
+                  value="Submit"
+                >
                   Submit
                 </Button>
               </Form>

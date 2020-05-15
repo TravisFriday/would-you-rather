@@ -40,7 +40,7 @@ class NavigationBar extends PureComponent {
                 <Nav.Link as={Link} to="/">
                   Home
                 </Nav.Link>
-                <Nav.Link as={Link} to="/newquestion">
+                <Nav.Link as={Link} to="/add">
                   New Question
                 </Nav.Link>
                 <Nav.Link as={Link} to="/leaderboard">

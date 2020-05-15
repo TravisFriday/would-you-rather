@@ -2,7 +2,8 @@ import React, { PureComponent } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { LoginUser } from "../actions/authedUser";
-import { Container } from "react-bootstrap";
+import { Form, FormGroup, Label, Input, Row, Col } from "reactstrap";
+import { Button } from "react-bootstrap";
 
 class Login extends PureComponent {
   constructor(props) {
@@ -29,39 +30,37 @@ class Login extends PureComponent {
 
   render() {
     const { users } = this.props;
+    const { userId } = this.state;
+
     return (
-      <Container>
-        <div className="container" style={{ width: "50%", paddingTop: 20 }}>
-          <span>Select User to log in as</span>
-          <form id="Login" onSubmit={this.handleSubmit}>
-            <div className="form-group">
-              <select
-                className="form-control"
-                id="userId"
-                onChange={(e) => this.handleChange(e)}
+      <Row>
+        <Col sm="12" md={{ size: 6, offset: 3 }}>
+          <Form onSubmit={this.handleSubmit}>
+            <FormGroup>
+              <Label for="userSelect">Select User</Label>
+              <Input
+                id="userSelect"
+                type="select"
+                name="select"
+                value={userId}
+                onChange={this.handleChange}
               >
-                <option value="Please select" disabled>
+                <option value="" disabled>
                   Please select
                 </option>
-                {Object.keys(users).map((user) => {
-                  return (
-                    <option key={users[user].id} value={users[user].id}>
-                      {users[user].name}
-                    </option>
-                  );
-                })}
-              </select>
-            </div>
-            <button
-              type="submit"
-              className="btn btn-primary"
-              disabled={this.state.userSelected === ""}
-            >
-              Login
-            </button>
-          </form>
-        </div>
-      </Container>
+                {Object.keys(users).map((user) => (
+                  <option key={user} value={user}>
+                    {users[user].name}
+                  </option>
+                ))}
+              </Input>
+            </FormGroup>
+            <Button disabled={userId === ""} type="submit" value="Submit">
+              Log in
+            </Button>
+          </Form>
+        </Col>
+      </Row>
     );
   }
 }

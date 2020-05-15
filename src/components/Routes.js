@@ -20,7 +20,7 @@ function Routes(props) {
           <Fragment>
             <Route path="/" exact component={Home} />
             <Route path="/leaderboard" exact component={LeaderBoard} />
-            <Route path="/newquestion" component={NewQuestion} />
+            <Route path="/add" component={NewQuestion} />
             <Route path="/question/:id" component={QuestionInfo} />
             <Route exact path="/logout" component={Logout} />
           </Fragment>
