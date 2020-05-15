@@ -1,6 +1,11 @@
-# Would You Rather Project
+# Would You Rather
 
-# This is React/Redux adaptation of the popular game Would you rather! You can answer questions and see what other users on the. You can view leaderboard to see how active other users are on the platform by showing how many questions they have asked and answered.
+This is React/Redux adaptation of the popular game Would you rather! You can answer questions and see what other users on the. You can view leaderboard to see how active other users are on the platform by showing how many questions they have asked and answered.
+
+# To get this project started run the following commands in the terminal:
+
+`npm install` to install the project dependencies
+`npm start` to start the project
 
 # Features List
 
@@ -21,15 +26,13 @@ There are two types of objects stored in our database:
 
 Users include:
 
-| Attribute | Type   | Description                                                                                            |
-| --------- | ------ | ------------------------------------------------------------------------------------------------------ |
-| id        | String | The user’s unique identifier                                                                           |
-| name      | String | The user’s first name and last name                                                                    |
-| avatarURL | String | The path to the image file                                                                             |
-| questions | Array  | A list of ids of the polling questions this user created                                               |
-| answers   | Object | The object's keys are the ids of each question this user answered. The value of each key is the answer |
-
-                                       the user selected. It can be either `'optionOne'` or `'optionTwo'` since each question has two options.
+| Attribute | Type   | Description                                                                                                     |
+| --------- | ------ | --------------------------------------------------------------------------------------------------------------- |
+| id        | String | The user’s unique identifier                                                                                    |
+| name      | String | The user’s first name and last name                                                                             |
+| avatarURL | String | The path to the image file                                                                                      |
+| questions | Array  | A list of ids of the polling questions this user created                                                        |
+| answers   | Object | The keys are the ids of each question this user answered. The value of each key is the answer the user selected |
 
 ### Questions
 
@@ -82,17 +85,13 @@ _Parameters_: Object that includes the following properties: `author`, `optionOn
 
 _Return Value_: An object that has the following properties: `id`, `author`, `optionOne`, `optionTwo`, `timestamp`. More details about these properties:
 
-| Attribute | Type   | Description                                                                                                           |
-| --------- | ------ | --------------------------------------------------------------------------------------------------------------------- |
-| id        | String | The id of the question that was posted                                                                                |
-| author    | String | The id of the user who posted the question                                                                            |
-| optionOne | Object | The object has a text property and a votes property, which stores an array of the ids of the users who voted for that |
-
-                        option
-
-| optionTwo | Object | The object has a text property and a votes property, which stores an array of the ids of the users who voted for that
-option
-|timestamp |String | The time when the question was created
+| Attribute | Type   | Description                                                                                                          |
+| --------- | ------ | -------------------------------------------------------------------------------------------------------------------- |
+| id        | String | The id of the question that was posted                                                                               |
+| author    | String | The id of the user who posted the question                                                                           |
+| optionOne | Object | It has a text property and a votes property, which stores an array of the ids of the users who voted for that option |
+| optionTwo | Object | It has a text property and a votes property, which stores an array of the ids of the users who voted for that option |
+| timestamp | String | The time when the question was created                                                                               |
 
 4. `saveQuestionAnswer(object)` Method
 
