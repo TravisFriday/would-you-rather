@@ -1,19 +1,15 @@
-import { getInitialData } from "../utils/api";
-import { showLoading, hideLoading } from "react-redux-loading";
+import { getInitialData, saveQuestion, saveQuestionAnswer } from "../utils/api";
+import { showLoading, hideLoading } from "react-redux-loading-bar";
 import {
-  // addUserQuestion,
-  // addUserQuestionAnswer,
-  // handleReceiveUsers,
+  addUserQuestion,
+  saveUserAnswer,
   receiveUsers,
-} from "./users";
+} from "../actions/users";
 import {
-  // addQuestion,
-  // addQuestionAnswer,
-  // handleReceiveQuestions,
+  addQuestion,
   receiveQuestions,
-} from "./questions";
-//import { LoginUser } from "./authedUser";
-//import { setAuthedUser, handleReceiveLoginUser } from "./authedUser";
+  addQuestionAnswer,
+} from "../actions/questions";
 
 export function handleInitialData() {
   return (dispatch) => {
@@ -26,34 +22,33 @@ export function handleInitialData() {
   };
 }
 
-// export function handleAddQuestionAnswer(qid, option) {
-//   return (dispatch, getState) => {
-//     dispatch(showLoading());
-//     const { authedUser } = getState();
+export function handleAddQuestion(optionOneText, optionTwoText) {
+  return (dispatch, getState) => {
+    dispatch(showLoading());
+    const { authedUser } = getState();
+    return saveQuestion({
+      optionOneText,
+      optionTwoText,
+      author: authedUser,
+    }).then((q) => {
+      dispatch(addQuestion(q));
+      dispatch(addUserQuestion(authedUser, q.id));
+      dispatch(hideLoading());
+    });
+  };
+}
 
-//     //const questionAnswer = { authedUser, qid, option };
-//     saveQuestionAnswer({ authedUser, qid, option }).then(() => {
-//       dispatch(addQuestionAnswer({ authedUser, qid, option }));
-//       dispatch(addUserQuestionAnswer({ authedUser, qid, option }));
-//       dispatch(hideLoading());
-//     });
-//   };
-// }
-// //Add a cb function as argument
-// export function handleAddQuestion(optionOneText, optionTwoText) {
-//   return (dispatch, getState) => {
-//     dispatch(showLoading());
-
-//     const { authedUser } = getState();
-//     return saveQuestion({
-//       optionOneText,
-//       optionTwoText,
-//       author: authedUser,
-//     }).then((q) => {
-//       dispatch(addQuestion(q));
-//       dispatch(addUserQuestion(authedUser, q.id));
-//       dispatch(showLoading());
-//     });
-//     //.then(cb);
-//   };
-// }
+export function handleAddAnswer(qid, option) {
+  return (dispatch, getState) => {
+    const { authedUser } = getState();
+    const info = {
+      authedUser: authedUser,
+      qid,
+      answer: option,
+    };
+    saveQuestionAnswer(info).then(() => {
+      dispatch(addQuestionAnswer(authedUser, qid, option));
+      dispatch(saveUserAnswer(authedUser, qid, option));
+    });
+  };
+}

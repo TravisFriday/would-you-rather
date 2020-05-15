@@ -12,20 +12,20 @@ export default function users(state = {}, action) {
         ...action.questions,
       };
     case ADD_QUESTION:
-      const { question } = action;
       return {
         ...state,
-        [question.id]: question,
+        [action.question.id]: action.question,
       };
     case ADD_QUESTION_ANSWER:
-      const { authedUser, qid, answer } = action;
       return {
         ...state,
-        [qid]: {
-          ...state[qid],
-          [answer]: {
-            ...state[qid][answer],
-            votes: state[qid][answer].votes.concat([authedUser]),
+        [action.qid]: {
+          ...state[action.qid],
+          [action.answer]: {
+            ...state[action.qid][action.answer],
+            votes: state[action.qid][action.answer].votes.concat([
+              action.authedUser,
+            ]),
           },
         },
       };

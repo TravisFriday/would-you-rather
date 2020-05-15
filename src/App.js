@@ -1,39 +1,27 @@
 import React, { Component, Fragment } from "react";
 import NavigationBar from "./components/NavigationBar";
 import { connect } from "react-redux";
-import { LoadingBar } from "react-redux-loading";
-import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+import { LoadingBar } from "react-redux-loading-bar";
+import { BrowserRouter } from "react-router-dom";
 import Routes from "./components/Routes";
-
-//import { handleReceiveQuestions, receiveQuestions } from "./actions/questions";
+import { handleInitialData } from "./actions/shared";
 
 class App extends Component {
+  componentDidMount() {
+    this.props.dispatch(handleInitialData());
+  }
   render() {
-    const { notLoggedIn } = this.props;
     return (
-      // <div>
-      //   <NavigationBar />
-      //   <div className="container" style={{ width: "50%", paddingTop: 20 }}>
-      //     <Login />
-      //   </div>
-      // </div>
       <BrowserRouter>
         <Fragment>
           <LoadingBar />
           <div className="app-container">
             <NavigationBar />
-            <Routes notLoggedIn={notLoggedIn} />
+            <Routes />
           </div>
         </Fragment>
       </BrowserRouter>
     );
   }
 }
-
-function mapStateToProps({ authedUser }) {
-  console.log("authedUser :", authedUser);
-  return {
-    notLoggedIn: authedUser === null,
-  };
-}
-export default connect(mapStateToProps)(App);
+export default connect()(App);

@@ -1,13 +1,23 @@
-import React, { Component, Fragment } from "react";
-import { Navbar, Nav, Button, Image } from "react-bootstrap";
+import React, { PureComponent, Fragment } from "react";
+import { Navbar, Nav } from "react-bootstrap";
+//import { Collapse, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink } from "reactstrap";
 import { connect } from "react-redux";
-import { Link, Redirect, withRouter } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { LogoutUser } from "../actions/authedUser";
+import User from "./User";
 
 //import { Link, Route } from "react-router-dom";
 
-class NavigationBar extends Component {
-  state = {};
+class NavigationBar extends PureComponent {
+  state = {
+    isOpen: false,
+  };
+
+  toggle = () => {
+    this.setState({
+      isOpen: !this.state.isOpen,
+    });
+  };
 
   handleSubmit = (e) => {
     e.preventDefault();
@@ -15,30 +25,36 @@ class NavigationBar extends Component {
   };
 
   render() {
-    const { name, avatarURL } = this.props;
     const { authedUser } = this.props;
 
     return (
       <Navbar bg="dark" variant="dark">
+        <Navbar.Brand as={Link} to="/">
+          Would You Rather...
+        </Navbar.Brand>
         {authedUser && (
           <Fragment>
-            <Nav className="mr-auto">
-              <Nav.Link href="/">Home</Nav.Link>
-              <Nav.Link href="/newquestion">New Question</Nav.Link>
-              <Nav.Link href="/leaderboard">LeaderBoard</Nav.Link>
-            </Nav>
-            <Nav className="mr-auto">
-              <Navbar.Brand href="home">Would You Rather...</Navbar.Brand>
-            </Nav>
-            <Nav>
-              <Nav.Link>Hello, {name ? name : "Sarah Edo"} </Nav.Link>
-              <Image src={avatarURL} roundedCircle style={styles.image}></Image>
-              <Link to="/login">
-                <Button type="submit" onClick={(e) => this.handleSubmit(e)}>
+            <Navbar.Toggle onClick={this.toggle} />
+            <Navbar.Collapse isOpen={this.state.isOpen} navbar="true">
+              <Nav className="mr-auto">
+                <Nav.Link as={Link} to="/">
+                  Home
+                </Nav.Link>
+                <Nav.Link as={Link} to="/newquestion">
+                  New Question
+                </Nav.Link>
+                <Nav.Link as={Link} to="/leaderboard">
+                  LeaderBoard
+                </Nav.Link>
+              </Nav>
+              <Nav className="mr-auto"></Nav>
+              <Nav>
+                <User id={authedUser} />
+                <Nav.Link as={Link} to="/logout">
                   Logout
-                </Button>
-              </Link>
-            </Nav>
+                </Nav.Link>
+              </Nav>
+            </Navbar.Collapse>
           </Fragment>
         )}
       </Navbar>
@@ -47,23 +63,11 @@ class NavigationBar extends Component {
 }
 
 //styling component
-const styles = {
-  image: {
-    maxHeight: 30,
-    width: "auto",
-    verticalAlign: "middle",
-    paddingLeft: 10,
-    paddingRight: 10,
-  },
-};
 
-function mapStateToProps({ authedUser, users }) {
-  const user = users[authedUser];
+function mapStateToProps({ authedUser }) {
   return {
-    user,
     authedUser,
   };
 }
 
-export default connect(mapStateToProps)(NavigationBar);
-//export default withRouter(connect(mapStateToProps, null)(NavBar))
+export default withRouter(connect(mapStateToProps, null)(NavigationBar));

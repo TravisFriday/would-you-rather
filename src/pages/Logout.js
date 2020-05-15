@@ -4,11 +4,11 @@ import { Redirect } from "react-router-dom";
 import { LogoutUser } from "../actions/authedUser";
 
 class Logout extends Component {
-  componentWillMount() {
+  componentDidMount() {
     this.props.dispatch(LogoutUser());
   }
   render() {
-    return <Redirect to="/login" />;
+    return <Redirect to="/" />;
   }
 }
 

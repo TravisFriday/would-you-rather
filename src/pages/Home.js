@@ -1,33 +1,33 @@
 import React, { Component } from "react";
-// import NavigationBar from "../components/NavigationBar";
 import { connect } from "react-redux";
-import Questions from "../components/Questions";
+import Question from "../components/Question";
 import { Tabs, Tab } from "react-mdl";
 import { ListGroup } from "react-bootstrap";
 
 class Home extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      activeTab: 0,
-    };
-  }
+  state = {
+    activeTab: 0,
+  };
 
   toggleTab() {
+    //renders unanswered questions
+    const { unansweredQuestions, answeredQuestions } = this.props;
     if (this.state.activeTab === 0) {
       return (
         <ListGroup style={{ textAlign: "center", border: "none" }}>
-          {this.props.questionIds.map((id) => (
-            <Questions key={id} />
+          {unansweredQuestions.map((questionID) => (
+            <Question id={questionID} key={questionID} />
           ))}
         </ListGroup>
       );
-    } else {
+    }
+    //renders answered questions
+    else {
       return (
         <div>
           <ListGroup style={{ textAlign: "center", border: "none" }}>
-            {this.props.questionIds.map((id) => (
-              <Questions key={id} />
+            {answeredQuestions.map((questionID) => (
+              <Question id={questionID} key={questionID} />
             ))}
           </ListGroup>
         </div>
@@ -44,10 +44,10 @@ class Home extends Component {
           ripple
         >
           <Tab style={{ color: "black", background: "white" }}>
-            Answered Questions
+            Unanswered Questions
           </Tab>
           <Tab style={{ color: "black", background: "white" }}>
-            Unanswered Questions
+            Answered Questions
           </Tab>
         </Tabs>
         <div>{this.toggleTab()}</div>
@@ -56,11 +56,16 @@ class Home extends Component {
   }
 }
 
-function mapStateToProps({ questions }) {
+function mapStateToProps({ questions, users, authedUser }) {
+  const user = users[authedUser];
+  const answeredQuestions = Object.keys(user.answers).sort(
+    (a, b) => questions[b].timestamp - questions[a].timestamp
+  );
   return {
-    questionIds: Object.keys(questions).sort(
-      (a, b) => questions[b].timestamp - questions[a].timestamp
-    ),
+    unansweredQuestions: Object.keys(questions)
+      .filter((qid) => !answeredQuestions.includes(qid))
+      .sort((a, b) => questions[b].timestamp - questions[a].timestamp),
+    answeredQuestions,
   };
 }
 

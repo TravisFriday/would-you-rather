@@ -1,9 +1,6 @@
-//import { showLoading, hideLoading } from "react-redux-loading";
-import { getUsers } from "../utils/api";
-
 export const RECEIVE_USERS = "RECEIVE_USERS";
 export const ADD_USER_QUESTION = "ADD_USER_QUESTION";
-export const ADD_USER_QUESTION_ANSWER = "ADD_USER_QUESTION_ANSWER";
+export const SAVE_USER_ANSWER = "SAVE_USER_ANSWER";
 
 export function receiveUsers(users) {
   return {
@@ -11,22 +8,6 @@ export function receiveUsers(users) {
     users,
   };
 }
-
-// export function handleReceiveUsers() {
-//   return (dispatch) => {
-//     return getUsers().then((users) => {
-//       dispatch(receiveUsers(users));
-//     });
-//   };
-// }
-
-// //Might Remove
-// export function addUser(user) {
-//   return {
-//     type: ADD_USER,
-//     user,
-//   };
-// }
 
 export function addUserQuestion(authedUser, qid) {
   return {
@@ -36,10 +17,10 @@ export function addUserQuestion(authedUser, qid) {
   };
 }
 
-export function addUserQuestionAnswer(authedUser, qid, option) {
+export function saveUserAnswer(auth, qid, option) {
   return {
-    type: ADD_USER_QUESTION_ANSWER,
-    authedUser,
+    type: SAVE_USER_ANSWER,
+    auth,
     qid,
     option,
   };
