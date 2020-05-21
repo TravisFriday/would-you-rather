@@ -14,35 +14,37 @@ import PrivateRoute from "./PrivateRoute";
 function Routes(props) {
   return (
     <div className="container">
-      <Switch>
-        <Fragment>
-          {props.notLoggedIn ? (
-            <Route path="/login" exact component={Login} />
-          ) : (
-            <div>
-              <Route path="/" exact component={Home} />
-              <PrivateRoute
-                isAuthenticated={!props.notLoggedIn}
-                path="/leaderboard"
-                exact
-                component={LeaderBoard}
-              />
-              <PrivateRoute
-                isAuthenticated={!props.notLoggedIn}
-                path="/add"
-                component={NewQuestion}
-              />
-              <PrivateRoute
-                isAuthenticated={!props.notLoggedIn}
-                path="/question/:id"
-                component={QuestionInfo}
-              />
-              <Route exact path="/logout" component={Logout} />
-              <Route component={ErrorPage} />
-            </div>
-          )}
-        </Fragment>
-      </Switch>
+      {/* <Switch> */}
+      <Fragment>
+        <Switch>
+          <Route path="/login" exact component={Login} />
+          <PrivateRoute
+            isAuthenticated={!props.notLoggedIn}
+            path="/"
+            exact
+            component={Home}
+          />
+          <PrivateRoute
+            isAuthenticated={!props.notLoggedIn}
+            path="/leaderboard"
+            exact
+            component={LeaderBoard}
+          />
+          <PrivateRoute
+            isAuthenticated={!props.notLoggedIn}
+            path="/add"
+            component={NewQuestion}
+          />
+          <PrivateRoute
+            isAuthenticated={!props.notLoggedIn}
+            path="/question/:id"
+            component={QuestionInfo}
+          />
+          <Route exact path="/logout" component={Logout} />
+          <Route component={ErrorPage} />
+        </Switch>
+      </Fragment>
+      {/* </Switch> */}
     </div>
   );
 }

@@ -22,10 +22,7 @@ class NavigationBar extends PureComponent {
   };
 
   render() {
-    const { authedUser, users } = this.props;
-    // if (authedUser === null && users) {
-    //   return <Link to="/login">Login</Link>;
-    // }
+    const { authedUser } = this.props;
 
     return (
       <Navbar bg="dark" variant="dark">
@@ -62,10 +59,9 @@ class NavigationBar extends PureComponent {
 
 //styling component
 
-function mapStateToProps({ authedUser, users }) {
+function mapStateToProps({ authedUser }) {
   return {
     authedUser,
-    users,
   };
 }
 
