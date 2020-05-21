@@ -14,7 +14,6 @@ import PrivateRoute from "./PrivateRoute";
 function Routes(props) {
   return (
     <div className="container">
-      {/* <Switch> */}
       <Fragment>
         <Switch>
           <Route path="/login" exact component={Login} />
@@ -41,10 +40,9 @@ function Routes(props) {
             component={QuestionInfo}
           />
           <Route exact path="/logout" component={Logout} />
-          <Route component={ErrorPage} />
+          <Route path="/error" component={ErrorPage} />
         </Switch>
       </Fragment>
-      {/* </Switch> */}
     </div>
   );
 }

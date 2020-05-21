@@ -7,7 +7,7 @@ const ErrorPage = ({ history }) => (
     <Card.Header>Error: 404</Card.Header>
     <Card.Body>
       <Card.Title>Page Not Found</Card.Title>
-      <Button size="small" onClick={() => history.push("/")}>
+      <Button size="small" onClick={() => history.push("/logout")}>
         Go to Login
       </Button>
     </Card.Body>

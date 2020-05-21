@@ -31,7 +31,8 @@ class Login extends PureComponent {
     const { authenticate, history, location } = this.props;
     if (userId) {
       authenticate(userId);
-      history.push(location.state.from || "/");
+
+      history.push(location.state ? location.state.from : "/");
     } else {
       alert("Please select a user before.");
     }
