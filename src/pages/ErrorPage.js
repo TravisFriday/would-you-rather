@@ -4,7 +4,7 @@ import { Button, Card } from "react-bootstrap";
 
 const ErrorPage = ({ history }) => (
   <Card>
-    <Card.Header>Error: 404</Card.Header>
+    <Card.Header>ERROR: 404</Card.Header>
     <Card.Body>
       <Card.Title>Page Not Found</Card.Title>
       <Button size="small" onClick={() => history.push("/logout")}>
