@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { Card, FormGroup, Form, Row, Container } from "react-bootstrap";
+import { Card, FormGroup, Form, Row, Container, Col } from "react-bootstrap";
 import { Button } from "reactstrap";
 import { connect } from "react-redux";
 import User from "../components/User";
@@ -33,6 +33,8 @@ class QuestionInfo extends PureComponent {
       percentOne,
       percentTwo,
       invalidQuestion,
+      optionOneVoteCount,
+      optionTwoVoteCount,
     } = this.props;
     const { selectedOption } = this.state;
 
@@ -92,6 +94,14 @@ class QuestionInfo extends PureComponent {
                         }
                       </div>
                     </div>
+                    <Row>
+                      <Col>{`Option one got ${optionOneVoteCount} ${
+                        optionOneVoteCount !== 1 ? "votes" : "vote"
+                      }`}</Col>
+                      <Col>{`Option two got ${optionTwoVoteCount} ${
+                        optionTwoVoteCount !== 1 ? "votes" : "vote"
+                      }`}</Col>
+                    </Row>
                     <div className="totalvotes">
                       Total Votes:
                       <CountUp start={0} end={totalVotes} duration={2.5} />
@@ -149,6 +159,9 @@ function mapStateToProps({ questions, users, authedUser }, { match }) {
     invalidQuestion = false;
   const { id } = match.params;
   const question = questions[id];
+  const optionOneVoteCount = question.optionOne.votes.length;
+  const optionTwoVoteCount = question.optionTwo.votes.length;
+
   if (question) {
     if (answers.hasOwnProperty(question.id)) {
       answer = answers[question.id];
@@ -173,6 +186,8 @@ function mapStateToProps({ questions, users, authedUser }, { match }) {
     percentOne,
     percentTwo,
     invalidQuestion,
+    optionOneVoteCount,
+    optionTwoVoteCount,
   };
 }
 
