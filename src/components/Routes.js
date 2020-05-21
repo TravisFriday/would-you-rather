@@ -9,23 +9,39 @@ import NewQuestion from "../pages/NewQuestion";
 import QuestionInfo from "../pages/QuestionInfo";
 import ErrorPage from "../pages/ErrorPage";
 import Logout from "../pages/Logout";
+import PrivateRoute from "./PrivateRoute";
 
 function Routes(props) {
   return (
     <div className="container">
       <Switch>
-        {props.notLoggedIn ? (
-          <Route path="/" exact component={Login} />
-        ) : (
-          <Fragment>
-            <Route path="/" exact component={Home} />
-            <Route path="/leaderboard" exact component={LeaderBoard} />
-            <Route path="/add" component={NewQuestion} />
-            <Route path="/question/:id" component={QuestionInfo} />
-            <Route exact path="/logout" component={Logout} />
-          </Fragment>
-        )}
-        <Route component={ErrorPage} />
+        <Fragment>
+          {props.notLoggedIn ? (
+            <Route path="/login" exact component={Login} />
+          ) : (
+            <div>
+              <Route path="/" exact component={Home} />
+              <PrivateRoute
+                isAuthenticated={!props.notLoggedIn}
+                path="/leaderboard"
+                exact
+                component={LeaderBoard}
+              />
+              <PrivateRoute
+                isAuthenticated={!props.notLoggedIn}
+                path="/add"
+                component={NewQuestion}
+              />
+              <PrivateRoute
+                isAuthenticated={!props.notLoggedIn}
+                path="/question/:id"
+                component={QuestionInfo}
+              />
+              <Route exact path="/logout" component={Logout} />
+              <Route component={ErrorPage} />
+            </div>
+          )}
+        </Fragment>
       </Switch>
     </div>
   );
@@ -33,7 +49,7 @@ function Routes(props) {
 
 Routes.propTypes = { notLoggedIn: PropTypes.any };
 
-function mapStateToProps({ authedUser }) {
+function mapStateToProps({ authedUser, users }) {
   return {
     notLoggedIn: authedUser === null,
   };

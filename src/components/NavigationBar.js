@@ -1,12 +1,9 @@
 import React, { PureComponent, Fragment } from "react";
 import { Navbar, Nav } from "react-bootstrap";
-//import { Collapse, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink } from "reactstrap";
 import { connect } from "react-redux";
 import { Link, withRouter } from "react-router-dom";
 import { LogoutUser } from "../actions/authedUser";
 import User from "./User";
-
-//import { Link, Route } from "react-router-dom";
 
 class NavigationBar extends PureComponent {
   state = {
@@ -25,7 +22,10 @@ class NavigationBar extends PureComponent {
   };
 
   render() {
-    const { authedUser } = this.props;
+    const { authedUser, users } = this.props;
+    // if (authedUser === null && users) {
+    //   return <Link to="/login">Login</Link>;
+    // }
 
     return (
       <Navbar bg="dark" variant="dark">
@@ -35,26 +35,24 @@ class NavigationBar extends PureComponent {
         {authedUser && (
           <Fragment>
             <Navbar.Toggle onClick={this.toggle} />
-            <Navbar.Collapse isOpen={this.state.isOpen} navbar="true">
-              <Nav className="mr-auto">
-                <Nav.Link as={Link} to="/">
-                  Home
-                </Nav.Link>
-                <Nav.Link as={Link} to="/add">
-                  New Question
-                </Nav.Link>
-                <Nav.Link as={Link} to="/leaderboard">
-                  LeaderBoard
-                </Nav.Link>
-              </Nav>
-              <Nav className="mr-auto"></Nav>
-              <Nav>
-                <User id={authedUser} />
-                <Nav.Link as={Link} to="/logout">
-                  Logout
-                </Nav.Link>
-              </Nav>
-            </Navbar.Collapse>
+            <Nav className="mr-auto">
+              <Nav.Link as={Link} to="/">
+                Home
+              </Nav.Link>
+              <Nav.Link as={Link} to="/add">
+                New Question
+              </Nav.Link>
+              <Nav.Link as={Link} to="/leaderboard">
+                LeaderBoard
+              </Nav.Link>
+            </Nav>
+            <Nav className="mr-auto"></Nav>
+            <Nav>
+              <User id={authedUser} />
+              <Nav.Link as={Link} to="/logout">
+                Logout
+              </Nav.Link>
+            </Nav>
           </Fragment>
         )}
       </Navbar>
@@ -64,9 +62,10 @@ class NavigationBar extends PureComponent {
 
 //styling component
 
-function mapStateToProps({ authedUser }) {
+function mapStateToProps({ authedUser, users }) {
   return {
     authedUser,
+    users,
   };
 }
 

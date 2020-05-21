@@ -46,7 +46,7 @@ class NewQuestion extends Component {
               <Card.Title>Would You Rather</Card.Title>
               <Form onSubmit={this.handleSubmit}>
                 <FormGroup>
-                  <Form.Label for="optionOne">Option One</Form.Label>
+                  <Form.Label htmlFor="optionOne">Option One</Form.Label>
                   <Form.Control
                     type="text"
                     name="optionOne"
@@ -56,7 +56,7 @@ class NewQuestion extends Component {
                   />
                 </FormGroup>
                 <FormGroup>
-                  <Form.Label for="optionTwo">Option Two</Form.Label>
+                  <Form.Label htmlFor="optionTwo">Option Two</Form.Label>
                   <Form.Control
                     type="text"
                     name="optionTwo"

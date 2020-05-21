@@ -1,4 +1,5 @@
 import {
+  _getUser,
   _getUsers,
   _getQuestions,
   _saveQuestion,
@@ -7,6 +8,10 @@ import {
 
 export function getUsers() {
   return _getUsers();
+}
+
+export function getUser(id) {
+  return _getUser(id);
 }
 
 export function getQuestions() {

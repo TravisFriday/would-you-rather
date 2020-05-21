@@ -13,6 +13,15 @@ class Login extends PureComponent {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  handleLogin = () => {
+    const { history, location } = this.props;
+    const { selectedUser } = this.state;
+    if (selectedUser) {
+      this.props.setCurrentUser(selectedUser);
+      history.push(location.pathname);
+    }
+  };
+
   handleChange(event) {
     this.setState({ userId: event.target.value });
   }
@@ -37,7 +46,7 @@ class Login extends PureComponent {
         <Col sm="12" md={{ size: 6, offset: 3 }}>
           <Form onSubmit={this.handleSubmit}>
             <FormGroup>
-              <Label for="userSelect">Select User</Label>
+              <Label htmlFor="userSelect">Select User</Label>
               <Input
                 id="userSelect"
                 type="select"

@@ -14,7 +14,6 @@ class Question extends Component {
   }
 
   render() {
-    console.log("PROPS: ", this.props);
     const { question, auth, users } = this.props;
     const { id, author } = question;
     return (
